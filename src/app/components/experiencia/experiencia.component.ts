@@ -30,12 +30,14 @@ export class ExperienciaComponent implements OnInit {
 
   // Estructura inicial para una nueva experiencia
   newExperience: Experiencia = {
+    titulo: '',
     owner: '',
     participants: [],
     description: ''
   };
 
   newExperience2: Experiencia = {
+    titulo:'',
     owner: '',
     participants: [],
     description: ''
@@ -110,6 +112,7 @@ export class ExperienciaComponent implements OnInit {
     console.log('filtrao',this.newExperience2.owner);
     this.getExperienciasFiltradas(this.ownerFilter);
     this.newExperience = {
+      titulo: '',
       owner: '',
       participants: [],
       description: ''
@@ -169,6 +172,7 @@ export class ExperienciaComponent implements OnInit {
   // Resetear el formulario después de crear una experiencia
   resetForm(): void {
     this.newExperience = {
+      titulo: '',
       owner: '',
       participants: [],
       description: ''

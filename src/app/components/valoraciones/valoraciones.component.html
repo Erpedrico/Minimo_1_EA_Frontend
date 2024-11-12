@@ -1,0 +1,91 @@
+<div class="container">
+    <!-- Botón para mostrar el formulario -->
+    <button (click)="mostrarFormulario()">Crear nueva valoración</button>
+  
+    <!-- Formulario para agregar o editar valoración -->
+    <div *ngIf="formularioVisible" class="form-container">
+      <h1>{{ indiceEdicion !== null ? 'Editar valoración' : 'Agregar una nueva valoración' }}</h1>
+      <form (ngSubmit)="agregarElemento(userForm)" #userForm="ngForm">
+        <div class="form-group">
+          <label for="nombre">Nombre:</label>
+          <input
+            id="nombre"
+            [(ngModel)]="nuevaValoracion.owner.name"
+            name="nombre"
+            placeholder="Nombre del usuario"
+            required />
+        </div>
+  
+        <div class="form-group">
+          <label for="titulo">Título de la experiencia:</label>
+          <input
+            id="titulo"
+            [(ngModel)]="nuevaValoracion.experiencia.titulo"
+            name="titulo"
+            placeholder="Título de la experiencia"
+            required />
+        </div>
+  
+        <div class="form-group">
+          <label for="likes">Likes:</label>
+          <input
+            id="likes"
+            [(ngModel)]="nuevaValoracion.likes"
+            name="likes"
+            type="number"
+            placeholder="Número de likes"
+            required />
+        </div>
+  
+        <div class="form-group">
+          <label for="dislikes">Dislikes:</label>
+          <input
+            id="dislikes"
+            [(ngModel)]="nuevaValoracion.dislikes"
+            name="dislikes"
+            type="number"
+            placeholder="Número de dislikes"
+            required />
+        </div>
+  
+        <button
+          type="submit"
+          class="submit-button"
+          [disabled]="!userForm.valid">
+          {{ indiceEdicion !== null ? 'Actualizar' : 'Agregar' }}
+        </button>
+  
+        <!-- Botón para cerrar el formulario -->
+        <button type="button" (click)="cerrarFormulario()">Cerrar</button>
+      </form>
+    </div>
+  
+    <!-- Lista de valoraciones -->
+    <div class="lista-valoracion">
+      <h1>Lista de Valoraciones</h1>
+      <ul>
+        <li *ngFor="let valoracion of valoraciones; let i = index">
+          <h3>Nombre: {{ valoracion.owner.name }}</h3>
+          <p>Experiencia: {{ valoracion.experiencia.titulo }}</p>
+          <div *ngIf="valoracion.vino && valoracion.vino.length > 0">
+            <h4>Vinos:</h4>
+            <ul>
+                <li *ngFor="let vino of valoracion.vino">{{ vino.name }}</li>
+            </ul>
+          </div>
+          <p>Likes: {{ valoracion.likes }}</p>
+          <p>Dislikes: {{ valoracion.dislikes }}</p>
+          <div *ngIf="valoracion.comments && valoracion.comments.length > 0">
+            <h4>Comentarios:</h4>
+            <ul>
+              <li *ngFor="let comentario of valoracion.comments">{{ comentario }}</li>
+            </ul>
+          </div>
+          <button (click)="incrementarLike(i)">👍 Like</button>
+          <button (click)="incrementarDislike(i)">👎 Dislike</button>
+          <button *ngIf="valoracion._id !== undefined" (click)="deleteValoracion(valoracion._id)">Eliminar</button>
+        </li>
+      </ul>
+    </div>
+  </div>
+  
